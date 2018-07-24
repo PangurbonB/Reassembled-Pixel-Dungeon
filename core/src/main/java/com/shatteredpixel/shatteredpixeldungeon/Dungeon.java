@@ -79,6 +79,7 @@ import java.util.HashSet;
 
 public class Dungeon {
 
+
 	//enum of items which have limited spawns, records how many have spawned
 	//could all be their own separate numbers, but this allows iterating, much nicer for bundling/initializing.
 	public static enum LimitedDrops {
@@ -179,6 +180,8 @@ public class Dungeon {
 	
 	public static int depth;
 	public static int gold;
+
+	public static float hunger;
 	
 	public static HashSet<Integer> chapters;
 
@@ -217,6 +220,7 @@ public class Dungeon {
 		
 		depth = 0;
 		gold = 0;
+		hunger = 0f;
 
 		droppedItems = new SparseArray<ArrayList<Item>>();
 
@@ -447,6 +451,7 @@ public class Dungeon {
 	private static final String CHALLENGES	= "challenges";
 	private static final String HERO		= "hero";
 	private static final String GOLD		= "gold";
+	private static final String HUNGER		= "hunger";
 	private static final String DEPTH		= "depth";
 	private static final String DROPPED     = "dropped%d";
 	private static final String LEVEL		= "level";
@@ -465,6 +470,7 @@ public class Dungeon {
 			bundle.put( CHALLENGES, challenges );
 			bundle.put( HERO, hero );
 			bundle.put( GOLD, gold );
+			bundle.put( HUNGER, hunger);
 			bundle.put( DEPTH, depth );
 
 			for (int d : droppedItems.keyArray()) {
@@ -620,6 +626,7 @@ public class Dungeon {
 		
 		gold = bundle.getInt( GOLD );
 		depth = bundle.getInt( DEPTH );
+		hunger = bundle.getInt( HUNGER );
 		
 		Statistics.restoreFromBundle( bundle );
 		Generator.restoreFromBundle( bundle );

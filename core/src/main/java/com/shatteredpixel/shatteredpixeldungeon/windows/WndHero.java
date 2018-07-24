@@ -110,14 +110,23 @@ public class WndHero extends WndTabbed {
 			title.setRect( 0, 0, WIDTH, 0 );
 			add(title);
 
-			pos = title.bottom() + 2*GAP;
+			pos = title.bottom() + GAP;
+
+			float dispVal = 100 - ((Dungeon.hunger/4));
+
+			if(dispVal % 1 == 0) {
+				int newVal = (int) dispVal;
+				statSlot( Messages.get(this, "hunger"), newVal +" / "+100);
+			}
+			else{
+				float newVal = dispVal;
+				statSlot( Messages.get(this, "hunger"), newVal +" / "+100);
+			}
 
 			statSlot( Messages.get(this, "str"), hero.STR() );
 			if (hero.SHLD > 0) statSlot( Messages.get(this, "health"), hero.HP + "+" + hero.SHLD + "/" + hero.HT );
 			else statSlot( Messages.get(this, "health"), (hero.HP) + "/" + hero.HT );
 			statSlot( Messages.get(this, "exp"), hero.exp + "/" + hero.maxExp() );
-
-			pos += GAP;
 
 			statSlot( Messages.get(this, "gold"), Statistics.goldCollected );
 			statSlot( Messages.get(this, "depth"), Statistics.deepestFloor );

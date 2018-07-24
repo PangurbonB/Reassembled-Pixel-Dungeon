@@ -24,6 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.ui;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -57,6 +58,7 @@ public class StatusPane extends Component {
 	private Image shieldedHP;
 	private Image hp;
 	private Image exp;
+	private Image hungerBar;
 
 	private BossHealthBar bossHP;
 
@@ -113,6 +115,9 @@ public class StatusPane extends Component {
 		hp = new Image( Assets.HP_BAR );
 		add( hp );
 
+		hungerBar = new Image( Assets.HUNG_BAR);
+		add(hungerBar);
+
 		exp = new Image( Assets.XP_BAR );
 		add( exp );
 
@@ -155,6 +160,9 @@ public class StatusPane extends Component {
 		hp.x = shieldedHP.x = rawShielding.x = 30;
 		hp.y = shieldedHP.y = rawShielding.y = 3;
 
+		hungerBar.x = 30;
+		hungerBar.y = 9;
+
 		bossHP.setPos( 6 + (width - bossHP.width())/2, 20);
 
 		depth.x = width - 35.5f - depth.width() / 2f;
@@ -163,7 +171,7 @@ public class StatusPane extends Component {
 
 		danger.setPos( width - danger.width(), 20 );
 
-		buffs.setPos( 31, 9 );
+		buffs.setPos( 31, 12 );
 
 		btnJournal.setPos( width - 42, 1 );
 
@@ -180,6 +188,9 @@ public class StatusPane extends Component {
 		float shield = Dungeon.hero.SHLD;
 		float max = Dungeon.hero.HT;
 
+		float hg = Dungeon.hunger;
+		float maxHg = Hunger.STARVING;
+
 		if (!Dungeon.hero.isAlive()) {
 			avatar.tint(0x000000, 0.5f);
 		} else if ((health/max) < 0.3f) {
@@ -193,6 +204,8 @@ public class StatusPane extends Component {
 		hp.scale.x = Math.max( 0, (health-shield)/max);
 		shieldedHP.scale.x = health/max;
 		rawShielding.scale.x = shield/max;
+
+		hungerBar.scale.x = Math.max(0, (maxHg - hg)/maxHg);
 
 		exp.scale.x = (width / exp.width) * Dungeon.hero.exp / Dungeon.hero.maxExp();
 
